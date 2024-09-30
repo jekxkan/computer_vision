@@ -4,7 +4,6 @@ import numpy as np
 def nothing(x):
     pass
 
-
 capture= cv2.VideoCapture(0)
 cv2.namedWindow('frame')
 cv2.createTrackbar('H', 'frame', 0,180, nothing)
