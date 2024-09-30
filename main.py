@@ -14,7 +14,6 @@ cv2.createTrackbar('HL', 'frame', 0,180, nothing)
 cv2.createTrackbar('SL', 'frame', 0,255, nothing)
 cv2.createTrackbar('VL', 'frame', 0,255, nothing)
 
-
 while True:
     return_code, image = capture.read()
     image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
