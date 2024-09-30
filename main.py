@@ -25,7 +25,6 @@ while True:
 
     # Объединение масок всех цветов
     combined_mask = red_mask | blue_mask | green_mask
-
     # Применение маски к заблюренному изображению
     result = cv2.bitwise_and(blurred_img, blurred_img, mask=combined_mask)
 
