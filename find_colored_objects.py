@@ -7,15 +7,15 @@ def find_red(image, image_hsv) -> int:
     "упаковывает" в прямоугольник и подписывает
 
     Args:
-        image: изображение с веб-камеры
-        image_hsv: изображение с веб-каемры в цветовом формате HSV
+        image: изображение, переданное в VideoCapture в main
+        image_hsv: изображение, переданное в VideoCapture в main, в цветовом формате HSV
 
     Returns:
         count_red(int): количество красный объектов
     """
     # Установка порогов для красного цвета
-    lower_red = np.array([0, 100, 155])
-    upper_red = np.array([180, 255, 255])
+    lower_red = np.array([0, 100, 50])
+    upper_red = np.array([10, 255, 255])
     red_mask = cv2.inRange(image_hsv, lower_red, upper_red)
 
     # Выделение контуров, "упаковка" в прямоугольник и соответвутствующая подпись для красных объектов
@@ -29,7 +29,7 @@ def find_red(image, image_hsv) -> int:
         area = cv2.contourArea(red_contours[x])
         if area > 100:
             x, y, width, height = cv2.boundingRect(red_contours[x])
-
+            print("Найден красный объект")
             image = cv2.rectangle(image, (x, y), (x + width, y + height), (255, 0, 0), 2)
             image_red = cv2.rectangle(image, (x, y), (x + 60, y - 25), (0, 0, 0), -1)
             cv2.putText(image_red, 'RED', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
@@ -43,8 +43,8 @@ def find_green(image, image_hsv) -> int:
     "упаковывает" в прямоугольник и подписывает
 
     Args:
-        image: изображение с веб-камеры
-        image_hsv: изображение с веб-каемры в цветовом формате HSV
+        image: изображение, переданное в VideoCapture в main
+        image_hsv: изображение, переданное в VideoCapture в main, в цветовом формате HSV
 
     Returns:
         count_green(int): количество зеленых объектов
@@ -64,6 +64,7 @@ def find_green(image, image_hsv) -> int:
     for x in range(len(green_contours)):
         area = cv2.contourArea(green_contours[x])
         if area > 100:
+            print("Найден зеленый объект")
             x, y, width, height = cv2.boundingRect(green_contours[x])
 
             image = cv2.rectangle(image, (x, y), (x + width, y + height), (255, 0, 0), 2)
@@ -79,15 +80,15 @@ def find_blue(image, image_hsv) -> int:
     "упаковывает" в прямоугольник и подписывает
 
     Args:
-        image: изображение с веб-камеры
-        image_hsv: изображение с веб-каемры в цветовом формате HSV
+        image: изображение, переданное в VideoCapture в main
+        image_hsv: изображение, переданное в VideoCapture в main, в цветовом формате HSV
 
     Returns:
         count_blue(int): количество синих объектов
     """
     # Установка порогов для синего цвета
-    lower_blue = np.array([90, 30, 40])
-    upper_blue = np.array([140, 255, 255])
+    lower_blue = np.array([100, 30, 0])
+    upper_blue = np.array([150, 255, 255])
     blue_mask = cv2.inRange(image_hsv, lower_blue, upper_blue)
 
     # Выделение контуров, "упаковка" в прямоугольник и соответвутствующая подпись для синих объектов
@@ -101,7 +102,7 @@ def find_blue(image, image_hsv) -> int:
         area = cv2.contourArea(blue_contours[x])
         if area > 100:
             x, y, width, height = cv2.boundingRect(blue_contours[x])
-
+            print("Найден синий объект")
             image = cv2.rectangle(image, (x, y), (x + width, y + height), (255, 0, 0), 2)
             image_red = cv2.rectangle(image, (x, y), (x + 80, y - 25), (0, 0, 0), -1)
             cv2.putText(image_red, 'BLUE', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)

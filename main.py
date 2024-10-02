@@ -1,25 +1,20 @@
 import cv2
 from find_colored_objects import find_red, find_blue, find_green
+from forms import find_form
 
 capture= cv2.VideoCapture(0)
 
 while True:
     return_code, image = capture.read()
-    blurred_image = cv2.GaussianBlur(image, (3, 3), 0)
-    image_hsv = cv2.cvtColor(blurred_image, cv2.COLOR_BGR2HSV)
-
-    # #Объединение масок всех цветов
-    # combined_mask = red_mask | get_green_mask(image_hsv) | get_blue_mask(image_hsv)
-    #
-    # # Применение маски для всех цветов к изображению
-    # result = cv2.bitwise_and(image, image, mask=mask)
+    image = cv2.bilateralFilter(image, 9, 75, 75)
+    image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     find_red(image, image_hsv)
     find_green(image, image_hsv)
     find_blue(image, image_hsv)
+    find_form(image)
 
-    cv2.imshow('From camera', image)
-    # cv2.imshow('detection', result)
+    cv2.imshow('Image', image)
 
     #Код нажатой клавиши, побитовая операция гарантирует, что код будет соотвествовать ASCII-кодам символов
     key = cv2.waitKey(30) & 0xFF
