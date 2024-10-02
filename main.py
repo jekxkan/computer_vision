@@ -3,6 +3,9 @@ from find_colored_objects import find_red, find_blue, find_green
 from forms import find_form
 
 capture= cv2.VideoCapture(0)
+fourcc = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')
+out = cv2.VideoWriter('videos/detected.avi', fourcc, 20.0, (640, 480))
+record = False
 
 while True:
     return_code, image = capture.read()
@@ -16,6 +19,17 @@ while True:
 
     cv2.imshow('Image', image)
 
+    #Нажать на r, чтобы начать запись
+    key_record = cv2.waitKey(1) & 0xFF
+    if key_record == ord('r'):
+        record = True
+
+    #Нажать на b, чтобы завершить запись
+    if key_record == ord('b'):
+        record = False
+    if record:
+        out.write(image)
+
     #Код нажатой клавиши, побитовая операция гарантирует, что код будет соотвествовать ASCII-кодам символов
     key = cv2.waitKey(30) & 0xFF
     #27 номер соответствует клавише "Escape"
@@ -26,5 +40,9 @@ print(f"Количество красных объектов на последн
 print(f"Количество зеленых объектов на последнем кадре: {find_green(image, image_hsv)}")
 print(f"Количество синих объектов на последнем кадре: {find_blue(image, image_hsv)}")
 
+
+if out is not None:
+    out.release()
+capture.release()
 cv2.destroyAllWindows()
 
