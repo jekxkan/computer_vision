@@ -14,8 +14,8 @@ def find_red(image, image_hsv) -> int:
         count_red(int): количество красный объектов
     """
     # Установка порогов для красного цвета
-    lower_red = np.array([0, 100, 50])
-    upper_red = np.array([10, 255, 255])
+    lower_red = np.array([0, 130, 145])
+    upper_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(image_hsv, lower_red, upper_red)
 
     # Выделение контуров, "упаковка" в прямоугольник и соответвутствующая подпись для красных объектов
@@ -87,7 +87,7 @@ def find_blue(image, image_hsv) -> int:
         count_blue(int): количество синих объектов
     """
     # Установка порогов для синего цвета
-    lower_blue = np.array([100, 30, 0])
+    lower_blue = np.array([100, 50, 0])
     upper_blue = np.array([150, 255, 255])
     blue_mask = cv2.inRange(image_hsv, lower_blue, upper_blue)
 
